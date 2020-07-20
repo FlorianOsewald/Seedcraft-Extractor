@@ -1,0 +1,21 @@
+﻿<mah:MetroWindow x:Class="PoeSeedcraftPricer.MainWindow"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PoeSeedcraftPricer"
+                 xmlns:views="clr-namespace:PoeSeedcraftPricer.Views"
+                 mc:Ignorable="d"
+        Title="Seedcraft Pricer" Height="600" Width="800">
+    <Grid>
+        <mah:MetroAnimatedTabControl>
+            <mah:MetroTabItem Header="Price Horticrafting Stations">
+                <views:PriceItControl />
+            </mah:MetroTabItem>
+            <mah:MetroTabItem Header="Configure Prices">
+                <views:PriceConfigControl />
+            </mah:MetroTabItem>
+        </mah:MetroAnimatedTabControl>
+    </Grid>
+</mah:MetroWindow>

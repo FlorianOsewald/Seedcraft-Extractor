@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="PoeSeedcraftPricer.Views.PriceItControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PoeSeedcraftPricer.Views"
+             mc:Ignorable="d" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             x:Name="PriceItUserControl"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Image x:Key="Add" x:Shared="false" Source="{Binding Source={x:Static iconPacks:PackIconBoxIconsKind.RegularPlusCircle}, Converter={iconPacks:PackIconBoxIconsKindToImageConverter}, ConverterParameter={StaticResource MahApps.Brushes.Progress}}" Height="32" Width="32" />
+        <Image x:Key="Skip" x:Shared="false" Source="{Binding Source={x:Static iconPacks:PackIconBoxIconsKind.RegularMinusCircle}, Converter={iconPacks:PackIconBoxIconsKindToImageConverter}, ConverterParameter={StaticResource MahApps.Brushes.Progress}}" Height="32" Width="32" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Top Half => HeaderLine, Pastearea, Action Button -->
+        <Grid Grid.Row="0" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Price a Horticrafting Station" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20pt" Margin="0,0,0,0" />
+            <Label Content="Paste Station-Code:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16pt" Margin="15,0,0,0"/>
+            <TextBox x:Name="TextboxStationCode" GotFocus="TextboxStationCode_GotFocus" BorderBrush="{StaticResource MahApps.Brushes.Progress}" Text="{Binding Path=StationCode, ElementName=PriceItUserControl}" Grid.Row="2" AcceptsReturn="True" BorderThickness="2,2,2,2" Margin="15,0,0,0"/>
+            <Button Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}" Content="Price It!" Click="PriceItClick" FontSize="16pt" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
+        <!-- Display Grid-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Craft 1" FontSize="18pt" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding Path=FirstCraft.UiEnabled, ElementName=PriceItUserControl}"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Craft 2" FontSize="18pt" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding Path=SecondCraft.UiEnabled, ElementName=PriceItUserControl}"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Craft 3" FontSize="18pt" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding Path=ThirdCraft.UiEnabled, ElementName=PriceItUserControl}"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Note" FontSize="18pt" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" BorderBrush="{StaticResource MahApps.Brushes.Progress}" Text="{Binding Path=FirstCraft.CraftDescription, ElementName=PriceItUserControl}"  VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=FirstCraft.UiEnabled, ElementName=PriceItUserControl}" Margin="10,5,10,5" />
+            <TextBox Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource MahApps.Brushes.Progress}" Text="{Binding Path=SecondCraft.CraftDescription, ElementName=PriceItUserControl}"  VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=SecondCraft.UiEnabled, ElementName=PriceItUserControl}" Margin="10,5,10,5" />
+            <TextBox Grid.Row="2" Grid.Column="1" BorderBrush="{StaticResource MahApps.Brushes.Progress}" Text="{Binding Path=ThirdCraft.CraftDescription, ElementName=PriceItUserControl}" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=ThirdCraft.UiEnabled, ElementName=PriceItUserControl}" Margin="10,5,10,5" />
+            <TextBox Grid.Row="3" Grid.Column="1" BorderBrush="{StaticResource MahApps.Brushes.Progress}" Text="{Binding Path=Note, ElementName=PriceItUserControl}" FontSize="18pt" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,5,10,5" />
+
+            <Button x:Name="ButtonSkipCraft1" Grid.Row="0" Grid.Column="2" Style="{DynamicResource MahApps.Styles.Button.Circle}" Content="{DynamicResource Skip}" Click="FirstCraftSkipClicked" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding Path=FirstCraft.UiEnabled, ElementName=PriceItUserControl}" />
+            <Button x:Name="ButtonSkipCraft2" Grid.Row="1" Grid.Column="2" Style="{DynamicResource MahApps.Styles.Button.Circle}" Content="{DynamicResource Skip}" Click="SecondCraftSkipClicked" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding Path=SecondCraft.UiEnabled, ElementName=PriceItUserControl}" />
+            <Button x:Name="ButtonSkipCraft3" Grid.Row="2" Grid.Column="2" Style="{DynamicResource MahApps.Styles.Button.Circle}" Content="{DynamicResource Skip}" Click="ThirdCraftSkipClicked" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding Path=ThirdCraft.UiEnabled, ElementName=PriceItUserControl}" />
+
+            <Button x:Name="ButtonCopyNote" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}" Content="Copy" Click="CopyNoteClicked" FontSize="16pt" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+            <TextBox x:Name="TextBoxCraft1Amount" Grid.Row="0" Grid.Column="3" Width="40" TextAlignment="Center" KeyUp="TextBoxCraft1Amount_KeyUp" Text="{Binding Path=FirstCraft.Price.Amount, ElementName=PriceItUserControl}" BorderBrush="{StaticResource MahApps.Brushes.Progress}"  VerticalAlignment="Center" IsEnabled="{Binding Path=FirstCraft.UiEnabled, ElementName=PriceItUserControl}" />
+            <TextBox x:Name="TextBoxCraft2Amount" Grid.Row="1" Grid.Column="3" Width="40" TextAlignment="Center" KeyUp="TextBoxCraft2Amount_KeyUp" Text="{Binding Path=SecondCraft.Price.Amount, ElementName=PriceItUserControl}" BorderBrush="{StaticResource MahApps.Brushes.Progress}" VerticalAlignment="Center"  IsEnabled="{Binding Path=SecondCraft.UiEnabled, ElementName=PriceItUserControl}" />
+            <TextBox x:Name="TextBoxCraft3Amount" Grid.Row="2" Grid.Column="3" Width="40" TextAlignment="Center" KeyUp="TextBoxCraft3Amount_KeyUp" Text="{Binding Path=ThirdCraft.Price.Amount, ElementName=PriceItUserControl}" BorderBrush="{StaticResource MahApps.Brushes.Progress}" VerticalAlignment="Center" IsEnabled="{Binding Path=ThirdCraft.UiEnabled, ElementName=PriceItUserControl}" />
+
+            <Label Grid.Row="0" Grid.Column="4" Content="{Binding ElementName=PriceItUserControl, Path=FirstCraft.Price.Symbol}" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding Path=FirstCraft.UiEnabled, ElementName=PriceItUserControl}"/>
+            <Label Grid.Row="1" Grid.Column="4" Content="{Binding ElementName=PriceItUserControl, Path=SecondCraft.Price.Symbol}" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding Path=SecondCraft.UiEnabled, ElementName=PriceItUserControl}"/>
+            <Label Grid.Row="2" Grid.Column="4" Content="{Binding ElementName=PriceItUserControl, Path=ThirdCraft.Price.Symbol}" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding Path=ThirdCraft.UiEnabled, ElementName=PriceItUserControl}"/>
+        </Grid>
+    </Grid>
+</UserControl>
